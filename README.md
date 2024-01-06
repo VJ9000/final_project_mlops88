@@ -1,6 +1,20 @@
-# mlops88_ezCNNs
+# Project Description
 
-This is just a test project to check how things works
+#### Overall Goal of the Project:
+
+The primary goal of this project is to develop a robust image recognition system capable of accurately identifying various fruits and vegetables. Leveraging deep learning techniques, the project aims to build a model that can categorize images into specific food categories, distinguishing between a wide array of fruits and vegetables.
+
+#### Framework and Integration:
+
+PyTorch is the main deep learning framework used in the course, will serve as the backbone for this project. PyTorch's extensive capabilities in handling image data and constructing neural networks make it an ideal choice. The integration of PyTorch will involve leveraging its pre-trained image models, allowing for efficient and effective model training and deployment aswell as enabling us to use the framework [pytorch-image-models](https://github.com/huggingface/pytorch-image-models).
+
+#### Data for Analysis:
+
+The project will utilize the "Fruits and Vegetables Image Recognition Dataset" sourced from Kaggle. This dataset contains images of numerous fruits and vegetables, spanning categories such as bananas, apples, carrots, tomatoes, and many more. The dataset is organized into three primary folders - train, test, and validation - each containing images of 30 different food items. These images, totaling 1200 across all categories, will serve as the foundational dataset for training and validating the image recognition model. The dataset also furfills the requirement of size less than 10GB. Can be found [here](https://www.kaggle.com/datasets/kritikseth/fruit-and-vegetable-image-recognition/data)
+
+#### Expected Models:
+
+In utilizing the PyTorch framework, we will be looking into convolutional neural network (CNN) architectures. Specifically, models like ResNet, DenseNet, or EfficientNet, among others available within PyTorch's model zoo, are anticipated for their robustness in image classification tasks. These models will undergo fine-tuning or transfer learning approaches to adapt to the specifics of the fruits and vegetables dataset, facilitating accurate recognition and classification. We have named our project mlops88_ezCNNs for (group 88 in mlops easy CNNs)
 
 ## Project structure
 
