@@ -17,7 +17,7 @@ torch.manual_seed(12)
 IS_TRAIN = True
 images_nums = data.prepare_data_dirs()
 weights = [100.0 / images_nums[category] for category in data.CATEGORIES.values()]
-batch_size = 150
+batch_size = 64
 train_dataset = torchvision.datasets.ImageFolder(data.TRAIN_DIR, transform=data.train_transforms)
 train_batch_gen = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 val_batch_gen = None
