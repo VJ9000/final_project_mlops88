@@ -1,12 +1,13 @@
 import os
 
-try:
-    import dvc
-except ImportError:
-    print("dvc is not installed")
 
-# dvc needs to be in the path
-os.system("dvc pull")
+def fetch_data_with_dvc():
+    try:
+        import dvc
+    except ImportError:
+        print("dvc is not installed")
+    # dvc needs to be in the path
+    os.system("dvc pull")
 
 
 if __name__ == '__main__':
