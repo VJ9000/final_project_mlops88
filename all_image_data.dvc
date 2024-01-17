@@ -3,4 +3,4 @@ outs:
   size: 1589914945
   nfiles: 2967
   hash: md5
-  path: all_image_data
+  path: data/raw/all_image_data
