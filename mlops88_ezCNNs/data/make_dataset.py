@@ -1,4 +1,6 @@
 import os
+import subprocess
+import logging
 import torch 
 from torchvision import transforms, datasets
 from torch.utils.data import DataLoader
@@ -7,13 +9,19 @@ import matplotlib.pyplot as plt
 
 DATA_ROOT_DIR = 'data/raw/all_image_data'
 
-def fetch_data_with_dvc():
+def check_dvc():
     try:
-        import dvc
-    except ImportError:
-        print("dvc is not installed")
-    # dvc needs to be in the path
-    os.system("dvc pull")
+        subprocess.run(["dvc", "--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+def run_dvc_pull():
+    try:
+        subprocess.run(["dvc", "pull"], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running 'dvc pull': {e}")
+
     
     
 def create_data_loaders(data_root, batch_size=32, test_split=0.2):
@@ -147,6 +155,12 @@ def visualize_sets_distribution(train_loader, test_loader, class_names):
 
 if __name__ == '__main__':
     # Get the data and process it
+    if not check_dvc():
+        logging.error("DVC is not installed.\n\
+                       pip install dvc\npip install 'dvc[gdrive]'")
+        
+    logging.info("Pulling data from DVC")    
+    run_dvc_pull()
     # For now we will not do any augmentation on the data 
     train_set,test_set,class_names = create_data_loaders(DATA_ROOT_DIR)
     visualize_test_set_distribution(train_set,test_set,class_names)
