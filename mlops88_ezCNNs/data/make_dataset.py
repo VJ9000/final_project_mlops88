@@ -18,16 +18,17 @@ def fetch_data_with_dvc():
     
 def create_data_loaders(data_root, batch_size=32, test_split=0.2):
     """
-    Create training and test data loaders for a given dataset.
+    Create training and test data loaders for a given dataset with class-wise splitting.
 
     Parameters:
     - data_root (str): Path to the root folder of the dataset.
     - batch_size (int): Batch size for the data loaders.
-    - test_split (float): Fraction of data to be used for testing.
+    - test_split (float): Fraction of data to be used for testing within each class.
 
     Returns:
     - train_loader (DataLoader): DataLoader for training data.
     - test_loader (DataLoader): DataLoader for test data.
+    - class_names (list): The class names 
     """
 
     # Define data transforms
@@ -39,23 +40,33 @@ def create_data_loaders(data_root, batch_size=32, test_split=0.2):
     # Create dataset
     full_dataset = datasets.ImageFolder(root=data_root, transform=data_transform)
 
-    # Calculate the number of samples for training and testing
-    num_samples = len(full_dataset)
-    num_test_samples = int(test_split * num_samples)
-    num_train_samples = num_samples - num_test_samples
+    # Create a dictionary to store indices for each class
+    class_indices = {class_name: [] for class_name in full_dataset.classes}
+    class_names = full_dataset.classes
 
-    # Split the dataset into training and test sets
-    train_dataset, test_dataset = torch.utils.data.random_split(
-        full_dataset, [num_train_samples, num_test_samples])
+    # Populate the dictionary with indices of images for each class
+    for idx, (image_path, label) in enumerate(full_dataset.imgs):
+        class_name = full_dataset.classes[label]
+        class_indices[class_name].append(idx)
 
-    # Create data loaders
+    # Split indices within each class
+    train_indices, test_indices = [], []
+    for class_name, indices in class_indices.items():
+        split_idx = int(len(indices) * (1 - test_split))
+        train_indices.extend(indices[:split_idx])
+        test_indices.extend(indices[split_idx:])
+
+    # Create data loaders based on the split indices
+    train_dataset = torch.utils.data.Subset(full_dataset, train_indices)
+    test_dataset = torch.utils.data.Subset(full_dataset, test_indices)
+
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-    return train_loader, test_loader
+    return train_loader, test_loader, class_names
 
 
-def visualize_data(data_loader, class_names=None, num_images=5):
+def visualize_data(data_loader, class_names, num_images=5):
     """
     Visualize a few sample images along with their labels from a data loader.
 
@@ -72,6 +83,8 @@ def visualize_data(data_loader, class_names=None, num_images=5):
         for i in range(num_images):
             axes[i].imshow(images[i])
             axes[i].set_title(batch_labels[i]) 
+            class_name = class_names[batch_labels[i]]
+            axes[i].set_title(f"{class_name}")
             axes[i].axis('off')
         plt.show()
 
@@ -89,15 +102,54 @@ def visualize_class_distribution(data_root):
     plt.ylabel('Number of Images')
     plt.title('Class Distribution in all_image_data')
     plt.show()
+    
+# Helper function to calculate class counts from a DataLoader
+def get_class_counts(loader):
+    class_counts = {class_name: 0 for class_name in class_names}
+    for _, batch_labels in loader:
+        for label in batch_labels:
+            class_counts[class_names[label]] += 1
+    return class_counts
+
+def visualize_sets_distribution(train_loader, test_loader, class_names):
+    """
+    Visualize the class distribution in the train set and test set.
+
+    Parameters:
+    - train_loader (DataLoader): DataLoader for the training set.
+    - test_loader (DataLoader): DataLoader for the test set.
+    - class_names (list): List of class names in the dataset.
+    """
+
+    # Calculate class counts for train and test sets
+    train_class_counts = get_class_counts(train_loader)
+    test_class_counts = get_class_counts(test_loader)
+
+    # Plot the distribution for the train set
+    plt.figure(figsize=(12, 6))
+    plt.bar(train_class_counts.keys(), train_class_counts.values(), label='Train Set')
+    plt.xlabel('Class')
+    plt.xticks(rotation='vertical')
+    plt.ylabel('Number of Images')
+    plt.title('Class Distribution in Train Set')
+    plt.legend()
+    plt.show()
+
+    # Plot the distribution for the test set
+    plt.figure(figsize=(12, 6))
+    plt.bar(test_class_counts.keys(), test_class_counts.values(), label='Test Set')
+    plt.xlabel('Class')
+    plt.xticks(rotation='vertical')
+    plt.ylabel('Number of Images')
+    plt.title('Class Distribution in Test Set')
+    plt.legend()
+    plt.show()
 
 if __name__ == '__main__':
     # Get the data and process it
     # For now we will not do any augmentation on the data 
-    
-    visualize_class_distribution(DATA_ROOT_DIR)
-    train_set,test_set = create_data_loaders(DATA_ROOT_DIR)
-    # print(train_set.dataset.classes)
-    visualize_data(train_set,num_images = 10)
+    train_set,test_set,class_names = create_data_loaders(DATA_ROOT_DIR)
+    visualize_test_set_distribution(train_set,test_set,class_names)
     
     
     
