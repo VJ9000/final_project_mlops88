@@ -22,7 +22,9 @@ def run_dvc_pull():
     except subprocess.CalledProcessError as e:
         print(f"Error running 'dvc pull': {e}")
 
-    
+
+def load_data():
+    return create_data_loaders(DATA_ROOT_DIR)
     
 def create_data_loaders(data_root, batch_size=32, test_split=0.2):
     """
@@ -163,7 +165,7 @@ if __name__ == '__main__':
     run_dvc_pull()
     # For now we will not do any augmentation on the data 
     train_set,test_set,class_names = create_data_loaders(DATA_ROOT_DIR)
-    visualize_sets_distribution(train_set,test_set,class_names)
+    # visualize_sets_distribution(train_set,test_set,class_names)
     
     
     

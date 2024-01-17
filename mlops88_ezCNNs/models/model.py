@@ -1,6 +1,9 @@
 import torch
 import torchvision.models as models
+from torch import nn
 import timm
+from torchmetrics.classification import Accuracy
+import pytorch_lightning as pl
 
 class MyNeuralNet(torch.nn.Module):
     """ Basic neural network class. 
@@ -29,39 +32,54 @@ class MyNeuralNet(torch.nn.Module):
     
 
 
-class MyTimmNet:
+class MyTimmNet(pl.LightningModule):
     def __init__(self, train_loader, test_loader, num_classes, model_name='resnet18'):
+        super(MyTimmNet, self).__init__()
+
         self.model = timm.create_model(model_name, pretrained=True)
-        self.model.fc = torch.nn.Linear(self.model.fc.in_features, num_classes)
+        self.model.fc = nn.Linear(self.model.fc.in_features, num_classes)
 
-        self.criterion = torch.nn.CrossEntropyLoss()
-        self.optimizer = torch.optim.SGD(self.model.parameters(), lr=0.001, momentum=0.9)
-
+        self.criterion = nn.CrossEntropyLoss()
         self.train_loader = train_loader
         self.test_loader = test_loader
+        self.accuracy = Accuracy(num_classes=num_classes,task='multiclass')
+        self.test_results = []
 
-    def train(self, num_epochs):
-        self.model.train()
-        for epoch in range(num_epochs):
-            for inputs, labels in self.train_loader:
-                self.optimizer.zero_grad()
-                outputs = self.model(inputs)
-                loss = self.criterion(outputs, labels)
-                loss.backward()
-                self.optimizer.step()
+    def forward(self, x):
+        return self.model(x)
 
-    def evaluate(self):
-        self.model.eval()
-        correct = 0
-        total = 0
-        with torch.no_grad():
-            for inputs, labels in self.test_loader:
-                outputs = self.model(inputs)
-                _, predicted = torch.max(outputs.data, 1)
-                total += labels.size(0)
-                correct += (predicted == labels).sum().item()
+    def training_step(self, batch, batch_idx):
+        inputs, labels = batch
+        outputs = self(inputs)
+        loss = self.criterion(outputs, labels)
+        self.log('train_loss', loss)
+        return loss
 
-        accuracy = correct / total
-        print(f'Test Accuracy: {100 * accuracy:.2f}%')
+    def configure_optimizers(self):
+        optimizer = torch.optim.SGD(self.parameters(), lr=0.001, momentum=0.9)
+        return optimizer
 
+    def validation_step(self, batch, batch_idx):
+        inputs, labels = batch
+        outputs = self(inputs)
+        loss = self.criterion(outputs, labels)
+        acc = self.accuracy(outputs, labels)
+        self.log('val_loss', loss)
+        self.log('val_acc', acc)
+        return acc
+
+    def test_step(self, batch, batch_idx):
+        inputs, labels = batch
+        outputs = self(inputs)
+        loss = self.criterion(outputs, labels)
+        acc = self.accuracy(outputs, labels)
+
+        # Append the test result to the list
+        self.test_results.append(acc)
+
+        return acc
+
+    def on_test_epoch_end(self):
+        avg_acc = torch.stack(self.test_results).mean()
+        print(f'Test Accuracy: {avg_acc.item() * 100:.2f}%')
 
