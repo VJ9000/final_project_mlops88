@@ -163,7 +163,7 @@ if __name__ == '__main__':
     run_dvc_pull()
     # For now we will not do any augmentation on the data 
     train_set,test_set,class_names = create_data_loaders(DATA_ROOT_DIR)
-    visualize_test_set_distribution(train_set,test_set,class_names)
+    visualize_sets_distribution(train_set,test_set,class_names)
     
     
     
