@@ -28,5 +28,6 @@ jobs:
         pip install pytest
         pytest -v
     -name: Execute Unit testing
-      run: pytest tests/test_model.py
+      run: |
+        pytest tests/test_model.py
         
