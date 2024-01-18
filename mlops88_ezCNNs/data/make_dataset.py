@@ -6,8 +6,10 @@ from torchvision import transforms, datasets
 from torch.utils.data import DataLoader
 import numpy as np
 import matplotlib.pyplot as plt
+import warnings
 
-DATA_ROOT_DIR = 'data/raw/all_image_data'
+warnings.filterwarnings("ignore", category=UserWarning, message="Palette images with Transparency expressed in bytes should be converted to RGBA images")
+
 
 def check_dvc():
     try:
@@ -23,10 +25,10 @@ def run_dvc_pull():
         print(f"Error running 'dvc pull': {e}")
 
 
-def load_data():
-    return create_data_loaders(DATA_ROOT_DIR)
+def get_data_loaders(data_dir,batch_size=10,test_split=0.2):
+    return create_data_loaders(data_dir,batch_size,test_split)
     
-def create_data_loaders(data_root, batch_size=32, test_split=0.2):
+def create_data_loaders(data_root, batch_size=10, test_split=0.2):
     """
     Create training and test data loaders for a given dataset with class-wise splitting.
 
@@ -42,11 +44,14 @@ def create_data_loaders(data_root, batch_size=32, test_split=0.2):
     """
 
     # Define data transforms
+    
     data_transform = transforms.Compose([
         transforms.Resize((128, 128)),
+        transforms.RandomHorizontalFlip(), 
+        transforms.RandomRotation(10),       
         transforms.ToTensor(),
     ])
-
+    
     # Create dataset
     full_dataset = datasets.ImageFolder(root=data_root, transform=data_transform)
 
@@ -70,8 +75,8 @@ def create_data_loaders(data_root, batch_size=32, test_split=0.2):
     train_dataset = torch.utils.data.Subset(full_dataset, train_indices)
     test_dataset = torch.utils.data.Subset(full_dataset, test_indices)
 
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=8, persistent_workers=True)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=8, persistent_workers=True)
 
     return train_loader, test_loader, class_names
 
@@ -154,6 +159,7 @@ def visualize_sets_distribution(train_loader, test_loader, class_names):
     plt.title('Class Distribution in Test Set')
     plt.legend()
     plt.show()
+
 
 if __name__ == '__main__':
     # Get the data and process it
