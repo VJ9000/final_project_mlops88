@@ -160,11 +160,5 @@ cython_debug/
 #.idea/
 /data/raw/all_image_data
 .dvc
-lightning_logs/version_0/events.out.tfevents.1705511065.VJ-Desktop.2284.0
-lightning_logs/version_0/hparams.yaml
-lightning_logs/version_0/checkpoints/epoch=4-step=370.ckpt
-lightning_logs/version_1/events.out.tfevents.1705512336.VJ-Desktop.18628.0
-lightning_logs/version_1/hparams.yaml
-lightning_logs/version_1/checkpoints/epoch=4-step=370.ckpt
-lightning_logs/version_2/events.out.tfevents.1705513218.VJ-Desktop.17692.0
-lightning_logs/version_2/hparams.yaml
+lightning_logs/
+outputs/
