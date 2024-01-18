@@ -163,3 +163,4 @@ cython_debug/
 lightning_logs/
 outputs/
 wandb/
+data/Red_Apple.jpg

@@ -14,7 +14,6 @@ def main(cfg):
     wandb.init(
         project="Testing with RESNET18",
     )
-
     train_loader, test_loader, class_names = get_data_loaders(
         cfg.paths.all_images, cfg.params.batch_size
     )
@@ -28,7 +27,6 @@ def main(cfg):
     trainer = pl.Trainer(logger=wandb_logger, max_epochs=cfg.params.epoch_count)
     trainer.fit(model, train_loader, test_loader)
     trainer.test(model, test_loader)
-
     wandb.finish()
 
 

@@ -3,6 +3,6 @@ models:
 paths:
   all_images: "${hydra:runtime.cwd}/data/raw/all_image_data"
 params:
-  epoch_count: 5
+  epoch_count: 10
   lr: 1e-3
   batch_size: 32

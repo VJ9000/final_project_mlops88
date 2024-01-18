@@ -16,11 +16,12 @@ def predict_single_image(model, image_path):
     """Run prediction for a single image using the given model.
 
     Args:
-        model: Model to use for prediction
-        image_path (str): Path to the image file
+        model (MyTimmNet): The trained model to use for prediction.
+        image_path (str): The file path to the image.
 
     Returns:
-        Tensor: Model predictions
+        Tuple[Tensor, str, Image]: A tuple containing the model predictions,
+        the predicted class name, and the input image with added prediction text.
     """
     model.eval()
 
@@ -56,15 +57,11 @@ def add_text_to_image(image, text):
 @hydra.main(version_base=None, config_path="../conf", config_name="config_test")
 def main(cfg):
     wandb.init(project="Predicting with RESNET18")
-    model = MyTimmNet.load_from_checkpoint(
-        "lightning_logs/version_17/checkpoints/epoch=4-step=370.ckpt"
-    )
+    model = MyTimmNet.load_from_checkpoint(cfg.paths.checkpoint_path)
     prediction, predicted_class, image_with_prediction = predict_single_image(
         model, cfg.paths.testing_image
     )
-
     wandb.log({"image": [wandb.Image(image_with_prediction, caption="Testing Image")]})
-
     wandb.finish()
 
 

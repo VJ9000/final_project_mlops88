@@ -58,7 +58,7 @@ class MyTimmNet(pl.LightningModule):
     ):
         super(MyTimmNet, self).__init__()
         self.model = timm.create_model(model_name, pretrained=True)
-        self.num_classes = 36
+        self.num_classes = len(class_names)
         self.model.fc = nn.Linear(self.model.fc.in_features, self.num_classes)
         self.criterion = nn.CrossEntropyLoss()
         self.train_loader = train_loader
