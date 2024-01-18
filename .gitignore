@@ -162,3 +162,4 @@ cython_debug/
 .dvc
 lightning_logs/
 outputs/
+wandb/
