@@ -23,5 +23,10 @@ dependencies = {file = ["requirements.txt"]}
 [tool.setuptools.dynamic.optional-dependencies]
 dev = {file = ['requirements_dev.txt']}
 
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
+
 [tool.ruff]
 line-length = 120

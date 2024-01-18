@@ -1,23 +1,19 @@
 import pytest
 import torch
-from training import VGGModel, VGGBlock  # Import VGGBlock directly
+from mlops88_ezCNNs.models.model import MyTimmNet
 
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
+@pytest.fixture
+def my_timm_net():
+    # Create an instance of MyTimmNet with default parameters
+    net = MyTimmNet()
+    return net
 
-def test_model_construction():
-    num_classes = 10
-    model = VGGModel(classes_number=num_classes)
-    model.to(device)
+def test_forward_pass(my_timm_net):
+    # Create a dummy batch of images (batch size, channels, height, width)
+    dummy_input = torch.randn(1, 3, 224, 224)
     
-    # Check if the final fully connected layer outputs the correct number of classes
-    assert model.fc3.out_features == num_classes, "The output features of the last layer should match the number of classes."
+    # Perform a forward pass using the dummy input
+    output = my_timm_net(dummy_input)
     
-    # Check if the model is a subclass of nn.Module
-    assert issubclass(type(model), torch.nn.Module), "The model should be a subclass of nn.Module."
-    
-    # Check the presence of certain layers (e.g., the first VGG block)
-    assert hasattr(model, 'vgg_blocks'), "The model should have an attribute 'vgg_blocks'."
-    assert isinstance(model.vgg_blocks[0], VGGBlock), "The first element of 'vgg_blocks' should be an instance of VGGBlock."
-    
-    # Check if the model is on the correct device
-    assert next(model.parameters()).device == torch.device(device), f"The model parameters should be on the {device} device."
+    # Check if the output shape is as expected (batch size, number of classes)
+    assert output.shape == (1, my_timm_net.num_classes), "Output shape is incorrect"
