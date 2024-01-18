@@ -1,0 +1,9 @@
+models:
+  name: resnet18
+paths:
+  all_images: "${hydra:runtime.cwd}/data/raw/all_image_data"
+  testing_image: "${hydra:runtime.cwd}/data/raw/all_image_data/apple/Image_20.jpg"
+params:
+  epoch_count: 5
+  lr: 1e-3
+  batch_size: 32
