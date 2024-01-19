@@ -337,7 +337,7 @@ https://console.cloud.google.com/gcr/images/dtumlops-411611?referrer=search&proj
 >
 > Answer:
 
---- question 16 fill here ---
+We mainly performed debugging by understanding the problem, reproducing it, and investigating the logs. Some members also found isolating the affected code to be quite handy as it helped with issues surrounding path env, imports, and dependencies. We also use print statements, although not very often. We did not use profiling, however, we do not believe our code is perfect either. It was merely a time constraint.
 
 ## Working in the cloud
 
@@ -431,7 +431,7 @@ The answer is we did not. The reason for this was time. We spend a lot of time d
 >
 > Answer:
 
---- question 23 fill here ---
+We did not have enough time to implement the monitoring and request API such that the end user could interface with our model in an easier way.
 
 ### Question 24
 
@@ -450,7 +450,6 @@ We spend 5.27 DKKR during the project. All the credit was used by one group memb
   <img src="../docs/images/billing.png" width="400" style="margin-right: 20px;" />
 </p>
 
-
 ## Overall discussion of project
 
 > In the following section we would like you to think about the general structure of your project.
@@ -467,7 +466,29 @@ We spend 5.27 DKKR during the project. All the credit was used by one group memb
 >
 > Answer:
 
---- question 25 fill here ---
+<p style="text-align: center;">
+  <img src="../docs/images/system_overview.png" width="400" style="margin-right: 20px;" />
+</p>
+
+The project, initiated with a custom Cookiecutter template, established a well-structured foundation. The intuitive project structure seamlessly integrated essential components, including scripts for model operations, dataset creation, and prediction/training. Data Version Control (DVC) played a pivotal role in managing data, with datasets conveniently fetched into the 'data' directory.
+
+To enhance clarity and reproducibility, the team added a copy of the README file from the dtu_mlops report directory into their own, serving as a valuable resource for project progress and addressing exam questions. Additionally, a 'conf' directory housed configuration files instrumental for configuring experiments, ensuring consistency and ease during model predictions or training. This structured project, enriched with these components, fostered a cohesive and organized workflow.
+
+The team implemented code quality and format rules using Cookiecutter to keep the code and directory structured and standardized. Code quality and format are deemed crucial in large projects, ensuring maintainability, readability, and consistency. High-quality, standardized code facilitates easier understanding and navigation, enabling efficient collaboration and debugging, particularly in projects with multiple contributors over time.
+
+For version control, the team implemented tests, including 'test_dvc' to check for DVC installation and 'test_model' to ensure the correct output shape from the model's forward method. The overall code coverage, including these tests, stood at 40%, emphasizing that 100% coverage does not guarantee absolute error-free code.
+
+The team embraced branches and pull requests in their workflow, allowing parallel work without conflicts. This systematic use improved code organization, reduced conflicts, and provided a clear version history, enhancing overall version control.
+
+DVC was used initially for managing project data with Google Drive, later transitioning to Google Cloud Platform (GCP) for better scalability and performance. The integration of DVC with Google Drive facilitated data management, but the shift to GCP provided enhanced capabilities for handling larger datasets.
+
+The Continuous Integration (CI) setup, based on GitHub actions, included unit testing using pytest and linting. The workflow was triggered on specific branches or pull requests, automating the build and test process for code quality maintenance.
+
+Experiments were configured using Hydra and config files, providing flexibility and enabling the testing of diverse model configurations. Weights and Biases (WandB) were utilized for experiment tracking, ensuring reproducibility. Configuration files, combined with W&B integration, established a robust foundation for experimentation.
+
+The project utilized Docker for containerization, simplifying deployment across different environments. Google Cloud Platform services such as Compute Engine, Cloud Storage, Container Registry, and Cloud Build were leveraged for cloud development, providing a scalable and controlled environment.
+
+Overall, the team faced challenges, especially with GCP, but the structured approach, version control practices, and integration of tools contributed to a comprehensive and well-organized project. The team did not manage to deploy the model due to time constraints, and while monitoring was not implemented, it was acknowledged as valuable for the application's longevity. The project utilized 5.27 DKKR in credits, with one group member accounting for all expenses. The billing details showed a breakdown of the credits used during development. The overall system architecture depicted in the diagram showcased a journey from local development to cloud integration, highlighting key services and interactions throughout the process.
 
 ### Question 26
 
