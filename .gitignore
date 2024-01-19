@@ -160,3 +160,7 @@ cython_debug/
 #.idea/
 /data/raw/all_image_data
 .dvc
+lightning_logs/
+outputs/
+wandb/
+data/Red_Apple.jpg

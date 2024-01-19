@@ -1,0 +1,10 @@
+models:
+  name: resnet18
+paths:
+  checkpoint_path: "${hydra:runtime.cwd}/lightning_logs/version_17/checkpoints/epoch=4-step=370.ckpt"
+  all_images: "${hydra:runtime.cwd}/data/raw/all_image_data"
+  testing_image: "${hydra:runtime.cwd}/data/Red_Apple.jpg"
+params:
+  epoch_count: 5
+  lr: 1e-3
+  batch_size: 32
