@@ -343,6 +343,10 @@ We mainly performed debugging by understanding the problem, reproducing it, and 
 
 > In the following section we would like to know more about your experience when developing in the cloud.
 
+I accidently connected my github account to GCP and there for could not get access to the main project at the original github account. I then forked the project and did all the cloud with the linking of my github account. The link is found below:
+[https://github.com/MDLM94/final_project_mlops88](URL) 
+
+
 ### Question 17
 
 > **List all the GCP services that you made use of in your project and shortly explain what each service does?**
