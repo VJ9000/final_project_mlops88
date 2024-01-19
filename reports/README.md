@@ -35,16 +35,16 @@ end of the project.
 
 ### Week 2
 
-- [ ] Write unit tests related to the data part of your code
-- [ ] Write unit tests related to model construction and or model training
-- [ ] Calculate the coverage.
-- [ ] Get some continuous integration running on the github repository
-- [ ] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
-- [ ] Create a trigger workflow for automatically building your docker images
-- [ ] Get your model training in GCP using either the Engine or Vertex AI
+- [x] Write unit tests related to the data part of your code
+- [x] Write unit tests related to model construction and or model training
+- [x] Calculate the coverage.
+- [x] Get some continuous integration running on the github repository
+- [x] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
+- [x] Create a trigger workflow for automatically building your docker images
+- [x] Get your model training in GCP using either the Engine or Vertex AI
 - [ ] Create a FastAPI application that can do inference using your model
 - [ ] If applicable, consider deploying the model locally using torchserve
-- [ ] Deploy your model in GCP using either Functions or Run as the backend
+- [x] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
@@ -69,19 +69,15 @@ end of the project.
 >
 > Answer:
 
---- question 1 fill here ---
+Group 88
 
 ### Question 2
 
 > **Enter the study number for each member in the group**
 >
-> Example:
->
-> _sXXXXXX, sXXXXXX, sXXXXXX_
->
 > Answer:
 
---- question 2 fill here ---
+s184846, s170894, s240444
 
 ### Question 3
 
@@ -94,7 +90,9 @@ end of the project.
 >
 > Answer:
 
---- question 3 fill here ---
+At the project's beginning, our primary exploration centered on PyTorch imaging models (timm), with an initial intent to exclusively leverage their capabilities. However, as the project advanced, the incorporation of PyTorch Lightning became integral due to its remarkable capacity to significantly trim down residual lines of code. Our resultant model is now a balanced blend of the potent PyTorch imaging models and the efficiency-driven PyTorch Lightning framework.
+
+The selection of timm was particularly fitting, given our specific focus on classification tasks. The extensive model zoo offered by timm, including models like ResNet18, seamlessly aligned with our project goals. This strategy streamlined our development process but also heightened the adaptability and effectiveness of creating a model that can do classification.
 
 ## Coding environment
 
@@ -111,7 +109,22 @@ end of the project.
 >
 > Answer:
 
---- question 4 fill here ---
+We employed a combination of conda, requirements.txt, and Docker containers to effectively manage dependencies in our project. Our dependency list was automatically generated using conda and captured in the requirements.txt file. To replicate our development environment precisely, a new team member would need to run the following commands:
+
+```
+conda create --name <env_name> python=3.11
+conda activate <env_name>
+pip install -r requirements.txt
+```
+
+Also we used docker containers for further encapsulations with the commands:
+
+```
+docker build -t <image_name> .
+docker run -it <image_name>
+```
+
+where the image_name is in our dockerfiles directory for prediction and training our model.
 
 ### Question 5
 
@@ -123,7 +136,9 @@ end of the project.
 > _From the cookiecutter template we have filled out the ... , ... and ... folder. We have removed the ... folder_ > _because we did not use any ... in our project. We have added an ... folder that contains ... for running our_ > _experiments._
 > Answer:
 
---- question 5 fill here ---
+Our project was initialized using a custom Cookiecutter template crafted by Nicki for the course, providing a well-structured foundation. The project structure proved intuitive, leading to seamless integration of essential components. Notably, we introduced scripts for model operations, dataset creation, and prediction/training. DVC (Data Version Control) played a pivotal role in managing our data, with datasets conveniently fetched into the 'data' directory.
+
+To enhance project clarity and reproducibility, added a copy of the README file from the `dtu_mlops` report directory into our own. This file not only tracks project progress but also serves as a valuable resource for addressing exam questions. Additionally, we established a `conf` directory housing configuration files. These files are instrumental for configuring experiments, ensuring consistency and ease when conducting model predictions or training. Overall, our project structure, enriched with these components, fosters a cohesive and organized workflow.
 
 ### Question 6
 
@@ -133,7 +148,7 @@ end of the project.
 >
 > Answer:
 
---- question 6 fill here ---
+We use cookiecutter to keep our code and directory structured and standardized. Code quality and format are crucial in large projects because they ensure maintainability, readability, and consistency. High-quality code with a standardized format facilitates easier understanding and navigation for developers, enabling efficient collaboration and debugging. This is especially important in large projects where multiple teams or individuals contribute to the codebase over time. It reduces the risk of errors and potential technical debt by enforcing best practices and coding standards.
 
 ## Version control
 
@@ -151,7 +166,8 @@ end of the project.
 >
 > Answer:
 
---- question 7 fill here ---
+Test_dvc : It checks whether dvc has been installed or not.
+Test_model: This test checks that the forward method of MyTimmNet produces an output tensor with the correct shape given a batch of input images. The test uses a pytest fixture to create an instance of MyTimmNet that can be reused in multiple tests if needed.
 
 ### Question 8
 
@@ -164,7 +180,7 @@ end of the project.
 >
 > Answer:
 
---- question 8 fill here ---
+Our overall coverage including the two tests is 40%. No, I would not completely trust 100% coverage to be absolutely error free. There can always be some edge cases that the unit tests do not account for, or there could be a logical flaw in the tests themselves. Coverage only tells us that the lines of code were executed, but not about the assertions. So we can have tests that execute all the code but don't check the results properly. Also, high coverage with low code quality can give a false sense of security.
 
 ### Question 9
 
@@ -177,7 +193,9 @@ end of the project.
 >
 > Answer:
 
---- question 9 fill here ---
+Yes, our workflow embraced branches and pull requests. With three team members, we each worked on separate branches for tasks and created new ones for new issues, closing old branches once merged. This allowed parallel work without conflicts.
+
+For task management, we assigned a dedicated branch, and after completion, a pull request was initiated, summarizing changes for collaborative review. This process ensured code quality before merging into the main branch. The systematic use of branches and pull requests improved code organization, reduced conflicts, and provided a clear version history. This approach significantly enhanced our version control, and gave us a more efficient and collaborative development process.
 
 ### Question 10
 
@@ -190,7 +208,7 @@ end of the project.
 >
 > Answer:
 
---- question 10 fill here ---
+Initially we used DVC with google drive for managing our project's data. However when there is a need for more advanced capabilities and scalability, is it better to use something cloud based. We therefore transitioned to Google Cloud Platform (GCP). Moving to GCP enhances data storage and processing capabilities, allowing to efficiently handle larger datasets and scale our project if needed. GCP's infrastructure can provide better performance and reliability for data intensive tasks and off-load our computer/laptops. The integration of DVC with google drive were a lot easier than integrating GCP. Though when GCP is set up correctly it is a lot better i.e. you don’t have to download the whole dataset every time to run the code etc. The shift from google drive to GCP, while using DVC would be “necessary” in the long run for better scaling and performance.
 
 ### Question 11
 
@@ -203,7 +221,8 @@ end of the project.
 >
 > Answer:
 
---- question 11 fill here ---
+Our CI is based on GitHub actions. It is triggered to run when code is pushed to the master, main, or dev/devansh branches, and when a pull request is made to the master or main branches. It was tested with windows-latest and ubuntu-latest and it contains a single job ‘build’.
+It uses the checkout@v2 action to access the repository’s code. It sets up python 3.10.10 and installs all dependencies mentioned in the requirements.txt file using pip. Then we install pytest and run pytest -v to check if the installation is proper so far. In the final step, we execute the unit tests that are located in the tests/ folder using pytest. This workflow ensures that every push to the specified branches or pull request to master will trigger an automated process to build the environment and run tests, helping maintain code quality and reliability.
 
 ## Running code and tracking experiments
 
@@ -221,7 +240,33 @@ end of the project.
 >
 > Answer:
 
---- question 12 fill here ---
+We created a directory `conf` that contains the configuration files for training/predicting and used Hydra to load them into our model.
+
+config_train:
+
+```yaml
+models:
+  name: resnet18
+paths:
+  all_images: "${hydra:runtime.cwd}/data/raw/all_image_data"
+params:
+  epoch_count: 10
+  lr: 1e-3
+  batch_size: 32
+```
+
+config_test:
+
+```yaml
+models:
+  name: resnet18
+paths:
+  checkpoint_path: "${hydra:runtime.cwd}/lightning_logs/version_17/checkpoints/epoch=4-step=370.ckpt"
+  all_images: "${hydra:runtime.cwd}/data/raw/all_image_data"
+  testing_image: "${hydra:runtime.cwd}/data/Red_Apple.jpg"
+```
+
+Where we define the hyperparameters and paths that are then parsed all the way down in the stream. For the training config the important thing is to have a correct path that points to the image data that we are using. As for the test we are loading a checkpoint in and set the model in evaluation mode where then we can test it with an image that the `testing_image` variable is pointing to.
 
 ### Question 13
 
@@ -234,7 +279,9 @@ end of the project.
 >
 > Answer:
 
---- question 13 fill here ---
+To ensure robust reproducibility, we implemented Weights and Biases to log and track critical information. Leveraging the seamless integration of PyTorch Lightning with WandB, we effortlessly monitored data and checkpoints, enabling the resumption of experiments and the exploration of various parameters. The synergy between PyTorch Lightning and wandb streamlined our workflow, fostering a more iterative and insightful approach to model development.
+
+Furthermore, the configuration files mentioned earlier played a pivotal role in enhancing flexibility. By adopting an abstract structure facilitated by Hydra, we easily created multiple configuration files. This abstraction allows us to conduct tests with diverse model configurations. Adjusting the configuration file loaded by Hydra becomes the sole requirement to experiment with different setups, providing a straightforward means of testing and optimizing our model under various conditions. This cohesive integration of tools and practices establishes a robust foundation for reproducibility and experimentation in our project.
 
 ### Question 14
 
@@ -247,7 +294,19 @@ end of the project.
 >
 > Answer:
 
---- question 14 fill here ---
+![Predicting with our model (predict_model.py)](..\docs\images\wandb_testing_with_resnet.png)
+![Predicting with our model (predict_model.py)](..\docs\images\wandb_predicting_with_resnet.png)
+
+We tracked the models accurcy for each of the classes as well as an image of the last testing batch, where the models prediction is written on each testing image. Such we can easly see how well the model is performing and how they differ from one another. In the first image we are looking at 2 different runs the light blue and purple. The second screenshot shows the output whenever we are running our `predict_model.py`, we are tracking the output image with the models prediction written into the image such that we can test with different images from the internet that the model have yet seen.
+
+What is interesting is that if we look at the first screeenshot the purple run is performing much better at classifing apples. If we inspect their output:
+
+<p float="left">
+  <img src="../docs/images/testing_result_1.png" width="400" style="margin-right: 20px;" />
+  <img src="../docs/images/testing_result_2.png" width="400" />
+</p>
+
+The left image is the light blue run and the right image is the purple run. Here you can see that our model is doing a much better job at classifying apples in the purple compared to the light blue run. This can also be seen in the graphs.
 
 ### Question 15
 
@@ -260,7 +319,10 @@ end of the project.
 >
 > Answer:
 
---- question 15 fill here ---
+We used docker to package our applications making them easy to run in any environment. The cloudbuild.yaml file shows how we built and shared our applications using google cloud build. We had two dockerfiles, one for the prediction model (predict_model.dockerfile) and another for the training model (train_model.dockerfile). They each build an image with everything needed for predictions or training. Both files included instructions on what to do when run. We had some issues using commands such as “docker run” etc. due to docker deamon not running and used a lot of time trying to fix this error.
+Here is a link for the dockerfiles:
+
+https://console.cloud.google.com/gcr/images/dtumlops-411611?referrer=search&project=dtumlops-411611
 
 ### Question 16
 
@@ -397,7 +459,13 @@ end of the project.
 >
 > Answer:
 
---- question 26 fill here ---
+Dividing the project among team members initially posed a challenge due to the absence of a holistic overview. Nicki's checklist emerged as a valuable resource, offering a structured approach. While we dedicated significant time to model development, the introduction of PyTorch Lightning proved to be a game-changer. This framework not only facilitated the refinement of our model through several iterations but also expedited the overall development process. Its clarity and efficiency were particularly noteworthy, helping us navigate the complexities more effectively.
+
+Despite these successes, challenges arose, especially in the realm of Google Cloud Platform (GCP). Difficulties encountered in configuring GCP settings and addressing infrastructure-related issues meant that certain planned tasks, such as creating an API to interact with our model, were deferred.
+
+Collaboration presented its own set of hurdles, notably due to team members coming from different educational backgrounds. The collaboration between the two DTU students benefitted from aligned timelines, with a shared three-week course schedule allowing for more seamless teamwork. However, coordinating with the EuroTEQ student proved challenging as he taking multiple courses concurrently. Navigating these differences underscored the importance of effective communication and flexible collaboration strategies when dealing with diverse team compositions and varying external commitments.
+
+In retrospect, the project's challenges provided valuable insights into project management dynamics, emphasizing the need for a comprehensive understanding of the project landscape and clear communication channels. While the difficulties with GCP and team collaboration were indeed setbacks, they also prompted adaptive strategies and enhanced our problem-solving skills. Moving forward, these experiences will undoubtedly contribute to more streamlined processes and improved collaboration in future projects.
 
 ### Question 27
 
@@ -410,4 +478,8 @@ end of the project.
 >
 > Answer:
 
---- question 27 fill here ---
+s184846 was in charge of setting up the repo with cookie cutter and develop a model with timm aswell as with pytorch lightning. Furthermore, setting up the configurations with Hydra and logging information with Weights and Baises.
+
+s170894 was in charge of the implementing DVC aswell as the requirements and containerizing our project into dockers. He was also responsible for setting up our GCP and deploy the model in the cloud such that we could cover that aspect of the course.
+
+s240444 was in charge of the CI part where he was resposible for setting up unit testing for our model aswell as looking into github runners to automate some of these tasks.
