@@ -294,14 +294,16 @@ Furthermore, the configuration files mentioned earlier played a pivotal role in 
 >
 > Answer:
 
-![Predicting with our model (predict_model.py)](..\docs\images\wandb_testing_with_resnet.png)
-![Predicting with our model (predict_model.py)](..\docs\images\wandb_predicting_with_resnet.png)
+<div style="text-align: center;">
+  <img src="../docs/images/wandb_testing_with_resnet.png" width="1000" style="margin-bottom: 10px;" />
+  <img src="../docs/images/wandb_predicting_with_resnet.png" width="1000" />
+</div>
 
 We tracked the models accurcy for each of the classes as well as an image of the last testing batch, where the models prediction is written on each testing image. Such we can easly see how well the model is performing and how they differ from one another. In the first image we are looking at 2 different runs the light blue and purple. The second screenshot shows the output whenever we are running our `predict_model.py`, we are tracking the output image with the models prediction written into the image such that we can test with different images from the internet that the model have yet seen.
 
 What is interesting is that if we look at the first screeenshot the purple run is performing much better at classifing apples. If we inspect their output:
 
-<p float="left">
+<p style="text-align: center;">
   <img src="../docs/images/testing_result_1.png" width="400" style="margin-right: 20px;" />
   <img src="../docs/images/testing_result_2.png" width="400" />
 </p>
