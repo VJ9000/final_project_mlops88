@@ -354,7 +354,15 @@ https://console.cloud.google.com/gcr/images/dtumlops-411611?referrer=search&proj
 >
 > Answer:
 
---- question 17 fill here ---
+In our project we used various google cloud platform services:
+
+1. Compute engine: This service is used for virtual machines that enables us to run applications efficiently in a controlled and scalable environment.
+
+2. Cloud storage and bucket: Cloud storage provided a secure and scalable solution for storing and retrieving our projects data.
+
+3. Container registry: This served as a private docker image storage. Basically streamlining the deployment of containerized applications allowing for managing and version control docker images.
+
+4. Cloud build: Cloud build automated our applications build, test and deployment process.
 
 ### Question 18
 
@@ -367,7 +375,7 @@ https://console.cloud.google.com/gcr/images/dtumlops-411611?referrer=search&proj
 >
 > Answer:
 
---- question 18 fill here ---
+The Compute Engine VM named "mlops88-cpu-vm-test" in the "europe-west1-b" zone with the "e2-medium" machine type was primarily utilized for managing Docker containers. We deployed and executed Dockerfiles on this VM, emphasizing tasks such as building Docker images, storing them, and potentially running containers. In this context, the VM served as a centralized platform for container-related operations in the cloud. The reason for the choices were just to make something work. We spend a lot of time dealing with GCP.
 
 ### Question 19
 
@@ -375,7 +383,9 @@ https://console.cloud.google.com/gcr/images/dtumlops-411611?referrer=search&proj
 >
 > Answer:
 
---- question 19 fill here ---
+<p style="text-align: center;">
+  <img src="../docs/images/bucket.png" width="400" style="margin-right: 20px;" />
+</p>
 
 ### Question 20
 
@@ -383,7 +393,9 @@ https://console.cloud.google.com/gcr/images/dtumlops-411611?referrer=search&proj
 >
 > Answer:
 
---- question 20 fill here ---
+<p style="text-align: center;">
+  <img src="../docs/images/container_reg.png" width="400" style="margin-right: 20px;" />
+</p>
 
 ### Question 21
 
@@ -391,7 +403,9 @@ https://console.cloud.google.com/gcr/images/dtumlops-411611?referrer=search&proj
 >
 > Answer:
 
---- question 21 fill here ---
+<p style="text-align: center;">
+  <img src="../docs/images/cloud_build.png" width="400" style="margin-right: 20px;" />
+</p>
 
 ### Question 22
 
@@ -404,7 +418,7 @@ https://console.cloud.google.com/gcr/images/dtumlops-411611?referrer=search&proj
 >
 > Answer:
 
---- question 22 fill here ---
+The answer is we did not. The reason for this was time. We spend a lot of time dealing with GCP and other stuff and a 4th member would probably have been better suited for this/us.
 
 ### Question 23
 
@@ -430,7 +444,12 @@ https://console.cloud.google.com/gcr/images/dtumlops-411611?referrer=search&proj
 >
 > Answer:
 
---- question 24 fill here ---
+We spend 5.27 DKKR during the project. All the credit was used by one group member. The result can be seen in the image below:
+
+<p style="text-align: center;">
+  <img src="../docs/images/billing.png" width="400" style="margin-right: 20px;" />
+</p>
+
 
 ## Overall discussion of project
 
